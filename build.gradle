@@ -1,0 +1,65 @@
+plugins {
+    id 'groovy'
+    id 'java'
+}
+
+version = '1.0.0'
+defaultTasks 'clean','build'
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+sourceCompatibility = 11.0
+ext.rundeckPluginVersion= '2.0'
+ext.rundeckVersion= '5.0.2-20240212'
+ext.pluginClassNames='com.plugin.openaichat.OpenAIChat'
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+configurations{
+    pluginLibs
+
+    implementation{
+        extendsFrom pluginLibs
+    }
+}
+
+dependencies {
+    implementation 'org.rundeck:rundeck-core:5.0.2-20240212'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.codehaus.groovy:groovy-all:3.0.9"
+    testImplementation "org.spockframework:spock-core:2.2-groovy-3.0"
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.pluginLibs
+}
+
+jar {
+    from "$buildDir/output"
+    manifest {
+        def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
+
+        attributes 'Rundeck-Plugin-Classnames': pluginClassNames
+        attributes 'Rundeck-Plugin-File-Version': version
+        attributes 'Rundeck-Plugin-Name': 'openai-chat'
+        attributes 'Rundeck-Plugin-Description': 'Integrate OpenAI chat models into Rundeck workflows for intelligent automation'
+        attributes 'Rundeck-Plugin-Author': 'rundecktoolkit'
+        attributes 'Rundeck-Plugin-Rundeck-Compatibility-Version': '3.x'
+        attributes 'Rundeck-Plugin-Tags': 'java,WorkflowStep,AI,OpenAI,GPT'
+        attributes 'Rundeck-Plugin-License': 'MIT'
+        attributes 'Rundeck-Plugin-Source-Link': 'https://github.com/rundecktoolkit/plugin-workflow-openai'
+        attributes 'Rundeck-Plugin-Target-Host-Compatibility': 'all'
+        attributes 'Rundeck-Plugin-Version': rundeckPluginVersion
+        attributes 'Rundeck-Plugin-Archive': 'true'
+        attributes 'Rundeck-Plugin-Libs': "${libList}"
+
+    }
+    dependsOn(copyToLib)
+}

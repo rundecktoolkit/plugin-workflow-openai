@@ -1,0 +1,47 @@
+[ {
+  "defaultTab" : "nodes",
+  "description" : "Example job demonstrating OpenAI Chat plugin usage",
+  "executionEnabled" : true,
+  "loglevel" : "INFO",
+  "name" : "OpenAI Example",
+  "nodeFilterEditable" : false,
+  "options" : [ {
+    "label" : "Enter English Phrase",
+    "name" : "text"
+  } ],
+  "plugins" : {
+    "ExecutionLifecycle" : { }
+  },
+  "scheduleEnabled" : true,
+  "sequence" : {
+    "commands" : [ {
+      "configuration" : {
+        "apiKeyPath" : "keys/project/openai/api_key",
+        "apiUrl" : "https://api.openai.com",
+        "maxTokens" : "1024",
+        "model" : "gpt-4",
+        "prompt" : "Translate this to French: ${option.text}",
+        "systemMessage" : "No Markdown. Just text"
+      },
+      "description" : "Translate",
+      "nodeStep" : false,
+      "plugins" : {
+        "LogFilter" : [ {
+          "config" : {
+            "extraQuotes" : "false",
+            "filter" : ".content",
+            "logData" : "true",
+            "prefix" : "content"
+          },
+          "type" : "json-mapper"
+        } ]
+      },
+      "type" : "openai-chat"
+    }, {
+      "description" : "Demonstrate Content",
+      "exec" : "echo ${data.content}"
+    } ],
+    "keepgoing" : false,
+    "strategy" : "node-first"
+  }
+} ]
