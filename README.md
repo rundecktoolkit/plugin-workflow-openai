@@ -141,6 +141,13 @@ Output: `build/libs/openai-chat-*.jar`
 
 > **Disclaimer:** This plugin is provided "as is" without warranty of any kind, express or implied. Use at your own risk. See [LICENSE](LICENSE) for details.
 
+## Related Plugins
+
+| Plugin | Description |
+|--------|-------------|
+| [Anthropic Query](https://github.com/rundecktoolkit/plugin-workflow-anthropic) | Integrate Claude AI models into workflows |
+| [Ollama Query](https://github.com/rundecktoolkit/plugin-workflow-ollama) | Query locally-hosted Ollama models |
+
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.
@@ -148,5 +155,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <sub>Built by <a href="https://github.com/rundecktoolkit">rundecktoolkit</a></sub>
+  <sub>Part of <a href="https://github.com/rundecktoolkit">rundecktoolkit</a> — Community plugins for Rundeck</sub>
 </p>
