@@ -35,7 +35,7 @@ This plugin adds an **OpenAI Chat** workflow step to Rundeck, enabling you to le
 
 | Platform | Version |
 |----------|---------|
-| Rundeck Community | 3.x, 4.x, 5.x |
+| Rundeck Community | 4.x, 5.x |
 | Runbook Automation (Self-Hosted) | 4.x, 5.x |
 
 ## Prerequisites
