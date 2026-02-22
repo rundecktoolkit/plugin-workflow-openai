@@ -40,23 +40,15 @@ This plugin adds an **OpenAI Chat** workflow step to Rundeck, enabling you to le
 
 ## Prerequisites
 
-To use JSON filtering with this plugin, install the [JQ JSON Log Filter](https://github.com/rundeck-plugins/jq-json-logfilter) plugin.
+> **Required:** Install the [JQ JSON Log Filter](https://github.com/rundeck-plugins/jq-json-logfilter) plugin to process JSON output from this plugin.
 
 ## Installation
 
-### Recommended: Via UI
+Download the latest JAR from [Releases](../../releases) and install via the Rundeck UI:
 
-1. Download the latest JAR from [Releases](../../releases)
-2. In Rundeck, navigate to **System Menu** → **Plugins** → **Upload Plugin**
-3. Select the downloaded JAR file
-4. The plugin is immediately available—no restart required
-
-### Alternative: Manual Installation
-
-```bash
-cp openai-chat-*.jar $RDECK_BASE/libext/
-```
-Restart Rundeck after manual installation.
+1. Navigate to **System Menu** → **Plugins** → **Upload Plugin**
+2. Select the downloaded JAR file
+3. The plugin is immediately available—no restart required
 
 ## Configuration
 
@@ -90,25 +82,25 @@ Store your OpenAI API key securely in Rundeck Key Storage:
 1. Create or edit a Rundeck job
 2. Add a workflow step → Select **OpenAI Chat**
 3. Configure the required parameters
-4. Save and run
+4. **Add a Log Filter** to process the JSON output (see below)
+5. Save and run
+
+### Processing JSON Output
+
+This plugin outputs JSON that must be processed with a log filter to extract values for subsequent steps.
+
+1. Click the gear icon on the OpenAI Chat step
+2. Add **Log Filter** → Select **jq json logfilter**
+3. Configure the jq expression (e.g., `.content` to extract the response text)
+4. Set a **Prefix** to name the output variable
+5. Use `${data.PREFIX}` in subsequent steps
 
 ### Output Variables
-
-The plugin exports data for use in subsequent steps:
 
 | Variable | Description |
 |----------|-------------|
 | `${data.openai_response}` | Full JSON response from API |
 | `${data.openai_content}` | Extracted text content |
-
-### Using with Log Filters
-
-Extract specific fields using the **JQ JSON Log Filter**:
-
-1. Add a log filter to the OpenAI Chat step
-2. Select **jq-json-logfilter**
-3. Configure the filter expression
-4. Access extracted values in later steps
 
 ## Examples
 
