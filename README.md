@@ -1,4 +1,4 @@
-<h1 align="center">Rundeck OpenAI Workstep Plugin</h1>
+<h1 align="center">Rundeck OpenAI Workflow Step Plugin</h1>
 
 <p align="center">
   <strong>Integrate OpenAI chat models into your Rundeck automation workflows</strong>
